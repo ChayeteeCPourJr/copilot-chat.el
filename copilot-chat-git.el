@@ -149,7 +149,14 @@ Git.  REPO-ROOT must be git top directory."
  (let* ((default-directory repo-root)
         (ls-output
          (aio-await
-          (copilot-chat--exec "git" "--no-pager" "ls-files" "--full-name")))
+          (copilot-chat--exec
+           "git"
+           "--no-pager"
+           "ls-files"
+           "--full-name"
+           "--cached"
+           "--others"
+           "--exclude-standard")))
         (all-files (split-string ls-output "\n" t)))
    (mapcar (lambda (file) (expand-file-name file repo-root)) all-files)))
 
